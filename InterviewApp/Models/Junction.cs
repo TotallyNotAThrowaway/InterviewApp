@@ -8,6 +8,7 @@ namespace InterviewApp.Models
 {
     internal class Junction
     {
+        // not all railwys can go to all others in some junctions
         public readonly List<Railway> Railways = new();
         public readonly Position Position;
         public Junction(Position position)

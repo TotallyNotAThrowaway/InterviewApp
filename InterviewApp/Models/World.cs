@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +9,7 @@ namespace InterviewApp.Models
     internal class World
     {
         public List<Junction> Junctions = new();
-        public List<Railway> Railays = new();
+        public List<Railway> Railways = new();
+        public List<Station> Stations = new();
     }
 }

@@ -15,6 +15,8 @@ namespace InterviewApp.Models
         private Junction start;
         private Junction end;
 
+        public Position[] Points => new[] { start.Position, end.Position };
+
         public readonly double Length;
 
         public Railway(Junction Start, Junction End)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,10 +40,15 @@ namespace InterviewApp.Controls
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            drawingContext.DrawEllipse(Brushes.Blue, null, new Point(50, 50), 50, 50);
+            //drawingContext.DrawEllipse(Brushes.Blue, null, new Point(50, 50), 50, 50);
 
-            foreach (var railway in world.Railays)
+            foreach (var railway in world.Railways) {
                 railway.Draw(drawingContext);
+            }
+
+            foreach (var station in world.Stations) {
+                station.Draw(drawingContext);
+            }
         }
 
         static MControl()
