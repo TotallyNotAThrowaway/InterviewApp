@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using InterviewApp.Models;
+using InterviewApp.Helpers;
 
 namespace InterviewApp.Controls
 {
@@ -20,6 +22,8 @@ namespace InterviewApp.Controls
     /// </summary>
     public partial class MControl : UserControl
     {
+        private readonly World world = WorldGenerator.GenerateWorld();
+
         public static readonly DependencyProperty MyPropertyProperty =
             DependencyProperty.Register("MyProperty", typeof(string), typeof(MControl), new PropertyMetadata(null));
 
@@ -37,6 +41,9 @@ namespace InterviewApp.Controls
         protected override void OnRender(DrawingContext drawingContext)
         {
             drawingContext.DrawEllipse(Brushes.Blue, null, new Point(50, 50), 50, 50);
+
+            foreach (var railway in world.Railays)
+                railway.Draw(drawingContext);
         }
 
         static MControl()
