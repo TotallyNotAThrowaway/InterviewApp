@@ -46,6 +46,10 @@ namespace InterviewApp.Controls
                 railway.Draw(drawingContext);
             }
 
+            foreach (var junction in world.Junctions) {
+                junction.Draw(drawingContext);
+            }
+
             foreach (var station in world.Stations) {
                 station.Draw(drawingContext);
             }
