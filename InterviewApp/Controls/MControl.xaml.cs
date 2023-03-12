@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using InterviewApp.Models;
 using InterviewApp.Helpers;
+using InterviewApp.ViewModels;
 
 namespace InterviewApp.Controls
 {
@@ -42,6 +43,7 @@ namespace InterviewApp.Controls
         {
             //drawingContext.DrawEllipse(Brushes.Blue, null, new Point(50, 50), 50, 50);
 
+            /* this is the old solution
             foreach (var railway in world.Railways) {
                 railway.Draw(drawingContext);
             }
@@ -54,6 +56,9 @@ namespace InterviewApp.Controls
                 //station.Draw(drawingContext);
                 station.Draw2(drawingContext);
             }
+            */
+
+            Railways.Draw(drawingContext);
         }
 
         static MControl()

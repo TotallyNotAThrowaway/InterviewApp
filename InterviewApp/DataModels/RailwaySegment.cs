@@ -16,6 +16,8 @@ namespace InterviewApp.DataModels
         public INode RightNeighbour { get; set; }
         public double Length { get; }
 
+        public Station Station { get; set; }
+
         public List<INode> GetNeighbours(INode from) {
             var result = new List<INode>();
             if (from == LeftNeighbour && RightNeighbour != null) {
@@ -28,13 +30,14 @@ namespace InterviewApp.DataModels
             return result;
         }
 
-        public RailwaySegment(int id, Point start, Point end, INode leftNeighbour, INode rightNeighbour) {
+        public RailwaySegment(int id, Point start, Point end, INode leftNeighbour, INode rightNeighbour, Station station) {
             Id = id;
             Start = start;
             End = end;
             LeftNeighbour = leftNeighbour;
             RightNeighbour = rightNeighbour;
             Length = Math.Sqrt(Math.Pow(Start.X - End.X, 2) + Math.Pow(Start.Y - End.Y, 2));
+            Station = station;
         }
     }
 }
