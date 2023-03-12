@@ -137,25 +137,35 @@ namespace InterviewApp.Helpers
             Stations = new List<Station>();
             var seg = new RailwaySegment(segmentCounter++, new Point(50, 50), new Point(100, 50), null, null, null);
             Segments.Add(seg);
-            var j = AddNode<Junction>(seg, seg.End, seg.End);
-            seg = AddNode<RailwaySegment>(j, j.Position, new Point(120, 30));
-            var segR = AddNode<RailwaySegment>(j, j.Position, new Point(150, 50));
-            seg = AddNode<RailwaySegment>(seg, seg.End, new Point(150, 30));
-            segR = AddNode<RailwaySegment>(segR, segR.End, new Point(170, 50));
-            j = AddNode<Junction>(seg, seg.End, seg.End);
-            seg = AddNode<RailwaySegment>(j, j.Position, new Point(170, 10));
-            segR = AddNode<RailwaySegment>(j, j.Position, new Point(180, 30));
-            seg = AddNode<RailwaySegment>(seg, seg.End, new Point(220, 10));
-            seg = AddNode<RailwaySegment>(seg, seg.End, new Point(250, 50));
-            j = AddNode<Junction>(seg, seg.End, seg.End);
-            seg = AddNode<RailwaySegment>(j, j.Position, new Point(210, 50));
-            seg = AddNode<RailwaySegment>(j, j.Position, new Point(270, 50));
+            var j = AddNode<Junction>(seg, seg.End);
+            seg = AddNode<RailwaySegment>(j, new Point(120, 30));
+            var segR = AddNode<RailwaySegment>(j, new Point(150, 50));
+            seg = AddNode<RailwaySegment>(seg, new Point(150, 30));
+            segR = AddNode<RailwaySegment>(segR, new Point(170, 50));
+            j = AddNode<Junction>(seg, seg.End);
+            seg = AddNode<RailwaySegment>(j, new Point(170, 10));
+            segR = AddNode<RailwaySegment>(j, new Point(180, 30));
+            seg = AddNode<RailwaySegment>(seg, new Point(220, 10));
+            seg = AddNode<RailwaySegment>(seg, new Point(250, 50));
+            j = AddNode<Junction>(seg, seg.End);
+            seg = AddNode<RailwaySegment>(j, new Point(210, 50));
+            seg = AddNode<RailwaySegment>(j, new Point(270, 50));
 
 
         }
 
-        private T AddNode<T>(INode parent, Point from, Point to) where T : class, INode {
+        /// <summary>
+        /// This creates a new node based on type
+        /// It connects to the end on the parent
+        /// or one of the exits on the junction
+        /// </summary>
+        /// <typeparam name="T">Junction or RailwaySegment</typeparam>
+        /// <param name="parent"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        private T AddNode<T>(INode parent, Point to) where T : class, INode {
             if (parent is Junction) {
+                var from = (parent as Junction).Position;
                 if (typeof(T) != typeof(RailwaySegment)) {
                     throw new NotSupportedException("Type of Junction only connects to RailwaySegment");
                 }
@@ -174,6 +184,7 @@ namespace InterviewApp.Helpers
                 }
             }
             else {
+                var from = (parent as RailwaySegment).End;
                 if (typeof(T) == typeof(RailwaySegment)) {
                     var result = new RailwaySegment(segmentCounter++, from, to, parent, null, null);
                     var p = parent as RailwaySegment;
