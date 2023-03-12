@@ -10,6 +10,8 @@ namespace InterviewApp.Helpers
 {
     internal static class WorldGenerator
     {
+        private static Random rand = new();
+
         public static World GenerateWorld() {
             var world = new World();
 
@@ -25,8 +27,9 @@ namespace InterviewApp.Helpers
             world.Junctions.Add(exit2);
 
             for (int i = 0; i < 10; i++) {
-                var jLeft = new Junction(50 + i * 10, 10 + i * 10);
-                var jRight = new Junction(100 + i * 10, 10 + i * 10);
+                var randomOffset = rand.Next(50) - 25;
+                var jLeft = new Junction(randomOffset + 50 + i * 10, 10 + i * 10);
+                var jRight = new Junction(randomOffset + 100 + i * 10, 10 + i * 10);
                 world.Junctions.Add(jLeft);
                 world.Junctions.Add(jRight);
                 var rail = new Railway(jLeft, jRight);
@@ -60,9 +63,10 @@ namespace InterviewApp.Helpers
             world.Stations.Add(station2);
 
             for (int i = 0; i < 6; i++) {
-                var jLeft = new Junction(400, 20 + i * 15);
-                var jMid = new Junction(400 + i * 10, 20 + i * 15);
-                var jRight = new Junction(500, 20 + i * 15);
+                var randomOffset = rand.Next(50) - 25;
+                var jLeft = new Junction(randomOffset + 400, 20 + i * 15);
+                var jMid = new Junction(randomOffset + 400 + i * 10, 20 + i * 15);
+                var jRight = new Junction(randomOffset + 500, 20 + i * 15);
                 var railLeft = new Railway(jLeft, jMid);
                 var railRight = new Railway(jMid, jRight);
                 world.Junctions.Add(jLeft);

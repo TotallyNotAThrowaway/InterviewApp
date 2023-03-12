@@ -51,7 +51,8 @@ namespace InterviewApp.Controls
             }
 
             foreach (var station in world.Stations) {
-                station.Draw(drawingContext);
+                //station.Draw(drawingContext);
+                station.Draw2(drawingContext);
             }
         }
 
