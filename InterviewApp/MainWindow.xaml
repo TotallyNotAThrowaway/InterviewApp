@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InterviewApp" xmlns:local1="clr-namespace:InterviewApp.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="1000">
     <Grid>
-        <local1:MControl RenderTransformOrigin="0.745,0.787" Margin="114,94,-114,-94" />
+        <local1:MControl RenderTransformOrigin="0.745,0.787" Margin="271,61,20,61" x:Name="RailwayMap"/>
+        <ComboBox x:Name="pathSelectEnd" HorizontalAlignment="Left" Margin="167,65,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox_SelectionChanged"/>
+        <ComboBox x:Name="pathSelectStart" HorizontalAlignment="Left" Margin="23,65,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="pathSelectStart_SelectionChanged"/>
+        <Label x:Name="label" Content="Select starting node" HorizontalAlignment="Left" Margin="23,34,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="label_Copy" Content="Select finish node" HorizontalAlignment="Left" Margin="167,34,0,0" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>

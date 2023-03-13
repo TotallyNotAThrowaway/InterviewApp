@@ -141,15 +141,38 @@ namespace InterviewApp.Helpers
             Stations.Add(new Station(StationCounter++, $"Station {StationCounter}", new List<RailwaySegment>(), Color.FromRgb(255, 120, 120)));
             CreateStation(new Point(0, 0), Stations[0]);
             Stations.Add(new Station(StationCounter++, $"Station {StationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 255, 120)));
-            CreateStation(new Point(300, 0), Stations[1]);
-            var nLeft = Stations[0].Segments.Last();
-            var nRight = Stations[1].Segments.First();
-            var connection = new RailwaySegment(segmentCounter++, nLeft.End, nRight.Start, nLeft, nRight, null);
-            nLeft.RightNeighbour = connection;
-            nRight.LeftNeighbour = connection;
-            Segments.Add(connection);
+            CreateStation(new Point(330, 0), Stations[1]);
             Stations.Add(new Station(StationCounter++, $"Station {StationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 120, 255)));
             CreateStation(new Point(0, 200), Stations[2]);
+
+            RailwaySegment nLeft, nRight;
+            ConnectSegments(Stations[0].Segments.Last(), Stations[1].Segments.First());
+            ConnectSegments(Stations[0].Segments[14], Stations[2].Segments.First());
+            nLeft = AddNode<RailwaySegment>(Stations[0].Segments.First(), new Point(30, 50));
+            nRight = AddNode<RailwaySegment>(Stations[2].Segments[14], new Point(30, 250));
+            ConnectSegments(nLeft, nRight);
+            nLeft = AddNode<RailwaySegment>(Stations[0].Segments[10], new Point(270, -10));
+            nRight = AddNode<RailwaySegment>(Stations[1].Segments[10], new Point(600, -10));
+            ConnectSegments(nLeft, nRight);
+            ConnectSegments(Stations[2].Segments[10], Stations[1].Segments[14]);
+            nLeft = AddNode<RailwaySegment>(Stations[2].Segments[18], new Point(630, 250));
+            ConnectSegments(nLeft, Stations[1].Segments[18]);
+        }
+
+        private void ConnectSegments(RailwaySegment left, RailwaySegment right) {
+            var connection = new RailwaySegment(segmentCounter++, left.RightNeighbour == null ? left.End : left.Start, right.LeftNeighbour == null ?  right.Start : right.End, left, right, null);
+
+            if (left.RightNeighbour == null)
+                left.RightNeighbour = connection;
+            else
+                left.LeftNeighbour = connection;
+
+            if (right.LeftNeighbour == null)
+                right.LeftNeighbour = connection;
+            else
+                right.RightNeighbour = connection;
+
+            Segments.Add(connection);
         }
 
         /// <summary>
