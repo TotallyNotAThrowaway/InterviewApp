@@ -26,6 +26,12 @@ namespace InterviewApp.DataModels
             else if (from == RightNeighbour && LeftNeighbour != null) {
                 result.Add(LeftNeighbour);
             }
+            else if (from == this) {
+                if (LeftNeighbour != null)
+                    result.Add(LeftNeighbour);
+                if (RightNeighbour != null)
+                    result.Add(RightNeighbour);
+            }
 
             return result;
         }

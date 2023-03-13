@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using InterviewApp.DataModels;
 using InterviewApp.Helpers;
 
 namespace InterviewApp.ViewModels
@@ -14,6 +15,7 @@ namespace InterviewApp.ViewModels
         private static Pen RailwayPen = new Pen(Brushes.Black, 2);
         private static Pen RailwayPointPen = new Pen(Brushes.Gray, 2);
         private static Pen JunctionPen = new Pen(Brushes.Red, 3);
+        private static Pen PathPen = new Pen(Brushes.Red, 3);
         //private static Brush StationBrush = new 
 
         public static void Draw(DrawingContext context) {
@@ -45,6 +47,34 @@ namespace InterviewApp.ViewModels
                 var brush = new SolidColorBrush(station.Color);
                 context.DrawGeometry(brush, new Pen(brush, 20), geometry);
                 context.Pop();
+            }
+
+            INode pathStartNode = (INode) MapRepository.Instance.Segments[14];//[14];//[0];
+            INode pathEndNode = (INode) MapRepository.Instance.Segments[29];//[29];//[11];
+            var highlight = new Pen(Brushes.Aqua, 3);
+
+            context.DrawLine(highlight, ((RailwaySegment) pathStartNode).Start, ((RailwaySegment) pathStartNode).End);
+            context.DrawLine(highlight, ((RailwaySegment) pathEndNode).Start, ((RailwaySegment) pathEndNode).End);
+            var path = AStar.FindPath(pathStartNode, pathEndNode, out var scores);
+            if (path != null) {
+                foreach (var node in path) {
+                    if (node is Junction)
+                        continue;
+
+                    var segment = (RailwaySegment) node;
+                    context.DrawLine(PathPen, segment.Start, segment.End);
+                }
+            }
+
+            var maxScore = scores.Values.Max();
+            foreach (var score in scores) {
+                if (score.Key is not RailwaySegment)
+                    continue;
+
+                var line = (RailwaySegment)score.Key;
+                int colorValue = (int)(score.Value / maxScore * 255);
+                var pen = new Pen(new SolidColorBrush(Color.FromRgb((byte)colorValue, (byte) (255 - colorValue), 0)), 4);
+                context.DrawLine(pen, line.Start, line.End);
             }
         }
 

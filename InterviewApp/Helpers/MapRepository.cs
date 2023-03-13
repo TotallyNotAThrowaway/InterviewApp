@@ -142,6 +142,12 @@ namespace InterviewApp.Helpers
             CreateStation(new Point(0, 0), Stations[0]);
             Stations.Add(new Station(StationCounter++, $"Station {StationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 255, 120)));
             CreateStation(new Point(300, 0), Stations[1]);
+            var nLeft = Stations[0].Segments.Last();
+            var nRight = Stations[1].Segments.First();
+            var connection = new RailwaySegment(segmentCounter++, nLeft.End, nRight.Start, nLeft, nRight, null);
+            nLeft.RightNeighbour = connection;
+            nRight.LeftNeighbour = connection;
+            Segments.Add(connection);
             Stations.Add(new Station(StationCounter++, $"Station {StationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 120, 255)));
             CreateStation(new Point(0, 200), Stations[2]);
         }
@@ -248,12 +254,12 @@ namespace InterviewApp.Helpers
             seg = AddNode<RailwaySegment>(j, new Point(170, 10), target, offset);
             segR = AddNode<RailwaySegment>(j, new Point(180, 30), target, offset);
             seg = AddNode<RailwaySegment>(seg, new Point(220, 10), target, offset);
-            seg = AddNode<RailwaySegment>(seg, new Point(250, 50), target, offset);
+            seg = AddNode<RailwaySegment>(seg, new Point(250, 10), target, offset);
             j = AddNode<Junction>(seg, seg.End, target);
-            seg = AddNode<RailwaySegment>(j, new Point(210, 50), target, offset);
-            seg = AddNode<RailwaySegment>(j, new Point(270, 50), target, offset);
+            seg = AddNode<RailwaySegment>(j, new Point(270, 10), target, offset);
+            seg = AddNode<RailwaySegment>(j, new Point(270, 30), target, offset);
             seg = AddNode<RailwaySegment>(segAcc, new Point(100, 80), target, offset);
-            j = InsertJunction(segAcc, seg, seg.Start);
+            j = InsertJunction(seg, segAcc, seg.Start);
             segAcc = AddNode<RailwaySegment>(j, new Point(170, 80), target, offset);
             seg = AddNode<RailwaySegment>(seg, new Point(50, 80), target, offset);
             seg = AddNode<RailwaySegment>(segAcc, new Point(220, 80), target, offset);

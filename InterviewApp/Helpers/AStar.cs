@@ -9,7 +9,7 @@ namespace InterviewApp.Helpers
 {
     internal class AStar
     {
-        public static List<INode> FindPath(INode start, INode end) {
+        public static List<INode> FindPath(INode start, INode end, out Dictionary<INode, double> scores) {
             var openSet = new List<INode> { start };
             var closedSet = new HashSet<INode>();
             var cameFrom = new Dictionary<INode, INode>();
@@ -20,13 +20,16 @@ namespace InterviewApp.Helpers
                 var current = openSet.OrderBy(n => fScore[n]).First();
 
                 if (current == end) {
+                    scores = fScore;
                     return ReconstructPath(cameFrom, end);
                 }
 
                 openSet.Remove(current);
                 closedSet.Add(current);
 
-                foreach (var neighbour in current.GetNeighbours(current)) {
+                cameFrom.TryGetValue(current, out var previous);
+
+                foreach (var neighbour in current.GetNeighbours(previous ?? current)) {
                     if (closedSet.Contains(neighbour)) {
                         continue;
                     }
@@ -46,6 +49,7 @@ namespace InterviewApp.Helpers
                 }
             }
 
+            scores = fScore;
             return null;
         }
 
