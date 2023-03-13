@@ -58,7 +58,7 @@ namespace InterviewApp.Controls
             }
             */
 
-            Railways.Draw(drawingContext);
+            RailwaysDrawingHelper.Draw(drawingContext);
         }
 
         static MControl()

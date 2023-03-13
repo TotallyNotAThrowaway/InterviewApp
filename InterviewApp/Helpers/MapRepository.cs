@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using InterviewApp.DataModels;
 using System.Windows;
+using System.Windows.Media;
 
 namespace InterviewApp.Helpers
 {
@@ -125,7 +126,8 @@ namespace InterviewApp.Helpers
                 var station = new Station(
                     iD: Stations.Count,
                     name: "Station " + i,
-                    segments: stationSegments
+                    segments: stationSegments,
+                    Color.FromRgb(0, 0, 0)
                 );
                 Stations.Add(station);
             }
@@ -135,23 +137,13 @@ namespace InterviewApp.Helpers
             Segments = new List<RailwaySegment>();
             Junctions = new List<Junction>();
             Stations = new List<Station>();
-            var seg = new RailwaySegment(segmentCounter++, new Point(50, 50), new Point(100, 50), null, null, null);
-            Segments.Add(seg);
-            var j = AddNode<Junction>(seg, seg.End);
-            seg = AddNode<RailwaySegment>(j, new Point(120, 30));
-            var segR = AddNode<RailwaySegment>(j, new Point(150, 50));
-            seg = AddNode<RailwaySegment>(seg, new Point(150, 30));
-            segR = AddNode<RailwaySegment>(segR, new Point(170, 50));
-            j = AddNode<Junction>(seg, seg.End);
-            seg = AddNode<RailwaySegment>(j, new Point(170, 10));
-            segR = AddNode<RailwaySegment>(j, new Point(180, 30));
-            seg = AddNode<RailwaySegment>(seg, new Point(220, 10));
-            seg = AddNode<RailwaySegment>(seg, new Point(250, 50));
-            j = AddNode<Junction>(seg, seg.End);
-            seg = AddNode<RailwaySegment>(j, new Point(210, 50));
-            seg = AddNode<RailwaySegment>(j, new Point(270, 50));
 
-
+            Stations.Add(new Station(StationCounter++, $"Station {StationCounter}", new List<RailwaySegment>(), Color.FromRgb(255, 120, 120)));
+            CreateStation(new Point(0, 0), Stations[0]);
+            Stations.Add(new Station(StationCounter++, $"Station {StationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 255, 120)));
+            CreateStation(new Point(300, 0), Stations[1]);
+            Stations.Add(new Station(StationCounter++, $"Station {StationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 120, 255)));
+            CreateStation(new Point(0, 200), Stations[2]);
         }
 
         /// <summary>
@@ -203,6 +195,72 @@ namespace InterviewApp.Helpers
                 }
             }
             throw new NotSupportedException("Wrong generation");
+        }
+
+        private T AddNode<T>(INode parent, Point to, Station station, Point? offset = null) where T : class, INode {
+            if (offset != null) {
+                to.X += offset.Value.X;
+                to.Y += offset.Value.Y;
+            }
+            var node = AddNode<T>(parent, to);
+            if (node is RailwaySegment)
+                station.Segments.Add(node as RailwaySegment);
+            return node;
+        }
+
+        private Junction InsertJunction(RailwaySegment entry, RailwaySegment exit, Point position) {
+            if ((entry.Start != position &&
+                entry.End != position) ||
+                (exit.Start != position &&
+                exit.End != position))
+                throw new ArgumentException("segments don't connect to the position");
+
+            var junction = new Junction(junctionCounter++, entry, exit, null, position);
+
+            if (entry.Start == position)
+                entry.LeftNeighbour = junction;
+            else
+                entry.RightNeighbour = junction;
+
+            if (exit.Start == position)
+                exit.LeftNeighbour = junction;
+            else
+                exit.RightNeighbour = junction;
+
+            Junctions.Add(junction);
+            return junction;
+        }
+
+        private List<RailwaySegment> CreateStation(Point offset, Station target) {
+            var returnIndexOffset = target.Segments.Count;
+            var seg = new RailwaySegment(segmentCounter++, new Point(50 + offset.X, 50 + offset.Y), new Point(100 + offset.X, 50 + offset.Y), null, null, null);
+            Segments.Add(seg);
+            target.Segments.Add(seg);
+            var j = AddNode<Junction>(seg, seg.End, target);
+            seg = AddNode<RailwaySegment>(j, new Point(120, 30), target, offset);
+            var segR = AddNode<RailwaySegment>(j, new Point(150, 50), target, offset);
+            var segAcc = segR;
+            seg = AddNode<RailwaySegment>(seg, new Point(150, 30), target, offset);
+            segR = AddNode<RailwaySegment>(segR, new Point(170, 50), target, offset);
+            j = InsertJunction(segR, segAcc, segR.Start);
+            segAcc = AddNode<RailwaySegment>(j, new Point(120, 80), target, offset);
+            j = AddNode<Junction>(seg, seg.End, target);
+            seg = AddNode<RailwaySegment>(j, new Point(170, 10), target, offset);
+            segR = AddNode<RailwaySegment>(j, new Point(180, 30), target, offset);
+            seg = AddNode<RailwaySegment>(seg, new Point(220, 10), target, offset);
+            seg = AddNode<RailwaySegment>(seg, new Point(250, 50), target, offset);
+            j = AddNode<Junction>(seg, seg.End, target);
+            seg = AddNode<RailwaySegment>(j, new Point(210, 50), target, offset);
+            seg = AddNode<RailwaySegment>(j, new Point(270, 50), target, offset);
+            seg = AddNode<RailwaySegment>(segAcc, new Point(100, 80), target, offset);
+            j = InsertJunction(segAcc, seg, seg.Start);
+            segAcc = AddNode<RailwaySegment>(j, new Point(170, 80), target, offset);
+            seg = AddNode<RailwaySegment>(seg, new Point(50, 80), target, offset);
+            seg = AddNode<RailwaySegment>(segAcc, new Point(220, 80), target, offset);
+            seg = AddNode<RailwaySegment>(seg, new Point(250, 80), target, offset);
+            seg = AddNode<RailwaySegment>(seg, new Point(280, 50), target, offset);
+            seg = AddNode<RailwaySegment>(seg, new Point(300, 50), target, offset);
+            return target.Segments.Skip(returnIndexOffset).ToList();
         }
 
     }
