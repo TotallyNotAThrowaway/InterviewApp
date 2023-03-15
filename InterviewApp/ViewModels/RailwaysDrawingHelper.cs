@@ -40,8 +40,6 @@ namespace InterviewApp.ViewModels
                     return;
                 var polygon = ConvexHull(allStationPoints.ToList());
                 context.PushOpacity(0.5d);
-                //var allPoints = Railways.SelectMany(r => r.Points).ToList();
-                //var Points = ConvexHull(allPoints).Select(p => new Point(p.X, p.Y)).ToList();
                 StreamGeometry geometry = new StreamGeometry();
                 using (StreamGeometryContext geometryContext = geometry.Open()) {
                     geometryContext.BeginFigure(polygon[0], true, true);
@@ -52,9 +50,6 @@ namespace InterviewApp.ViewModels
                 context.DrawGeometry(brush, new Pen(brush, 20), geometry);
                 context.Pop();
             }
-
-            //INode pathStartNode = (INode) MapRepository.Instance.Segments[14];//[14];//[0];
-            //INode pathEndNode = (INode) MapRepository.Instance.Segments[29];//[29];//[11
 
             var path = AStar.FindPath(pathStartNode, pathEndNode, out var scores);
 
