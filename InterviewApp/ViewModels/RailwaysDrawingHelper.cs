@@ -16,6 +16,7 @@ namespace InterviewApp.ViewModels
         private static Pen RailwayPointPen = new Pen(Brushes.Gray, 2);
         private static Pen JunctionPen = new Pen(Brushes.Red, 3);
         private static Pen PathPen = new Pen(Brushes.White, 1);
+        private static Pen highlight = new Pen(Brushes.DarkCyan, 3);
 
         public static INode pathStartNode { get; set; } = (INode) MapRepository.Instance.Segments[14];
         public static INode pathEndNode { get; set; } = (INode) MapRepository.Instance.Segments[29];
@@ -53,8 +54,7 @@ namespace InterviewApp.ViewModels
             }
 
             //INode pathStartNode = (INode) MapRepository.Instance.Segments[14];//[14];//[0];
-            //INode pathEndNode = (INode) MapRepository.Instance.Segments[29];//[29];//[11];
-            var highlight = new Pen(Brushes.Aqua, 3);
+            //INode pathEndNode = (INode) MapRepository.Instance.Segments[29];//[29];//[11
 
             var path = AStar.FindPath(pathStartNode, pathEndNode, out var scores);
 
@@ -69,6 +69,10 @@ namespace InterviewApp.ViewModels
                 context.DrawLine(pen, line.Start, line.End);
             }
 
+            
+            context.DrawLine(highlight, ((RailwaySegment) pathStartNode).Start, ((RailwaySegment) pathStartNode).End);
+            context.DrawLine(highlight, ((RailwaySegment) pathEndNode).Start, ((RailwaySegment) pathEndNode).End);
+
             if (path != null) {
                 foreach (var node in path) {
                     if (node is Junction)
@@ -80,8 +84,6 @@ namespace InterviewApp.ViewModels
             }
 
 
-            context.DrawLine(highlight, ((RailwaySegment) pathStartNode).Start, ((RailwaySegment) pathStartNode).End);
-            context.DrawLine(highlight, ((RailwaySegment) pathEndNode).Start, ((RailwaySegment) pathEndNode).End);
         }
 
         private static int Orientation(Point p, Point q, Point r) {

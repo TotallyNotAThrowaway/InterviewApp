@@ -20,129 +20,18 @@ namespace InterviewApp.Helpers
 
         private int segmentCounter = 0;
         private int junctionCounter = 0;
-        private int StationCounter = 0;
-
-        //private MapRepository() {
-        //    var segmentCounter = 0;
-        //    var junctionCounter = 0;
-        //    var StationCounter = 0;
-
-        //    Segments = new List<RailwaySegment>();
-        //    Junctions = new List<Junction>();
-        //    Stations = new List<Station>();
-
-        //    var segment = new RailwaySegment(segmentCounter++, new Point(50, 50), new Point(100, 50), null, null);
-        //    Segments.Add(segment);
-
-        //    var junction = new Junction(junctionCounter++, segment, null, null, segment.End);
-        //    segment.RightNeighbour = junction;
-        //    Junctions.Add(junction);
-
-        //    segment = new RailwaySegment(segmentCounter++, junction.Position, new Point(130, 30), junction, null);
-        //    junction.ExitLeft = segment;
-        //    Segments.Add(segment);
-
-
-        //}
-
-
-        private MapRepository(int a) {
-
-            Segments = new List<RailwaySegment>();
-            Junctions = new List<Junction>();
-            Stations = new List<Station>();
-
-            var firstSegment = new RailwaySegment(
-                                                    id: 0,
-                                                    start: new Point(0, 0),
-                                                    end: new Point(10, 0),
-                                                    leftNeighbour: null,
-                                                    rightNeighbour: null,
-                                                    station: null
-                                                );
-            Segments.Add(firstSegment);
-
-            // create the remaining segments
-            for (int i = 1; i < 150; i++) {
-                var previousSegment = Segments[i - 1];
-                var isJunction = rand.NextDouble() < 0.2; // 20% chance of creating a junction
-
-                if (isJunction) {
-                    // create a junction
-                    var junction = new Junction(
-                        id: Junctions.Count,
-                        entry: previousSegment,
-                        exitLeft: null,
-                        exitRight: null,
-                        position: previousSegment.End // same position as the end of the previous segment
-                    );
-                    Junctions.Add(junction);
-
-                    // connect the previous segment to the junction
-                    previousSegment.RightNeighbour = junction;
-                    junction.EntryPoint = previousSegment;
-
-                    // create a new segment starting from the junction
-                    var newSegment = new RailwaySegment(
-                        id: Segments.Count,
-                        start: junction.Position,
-                        end: new Point(junction.Position.X + 10, junction.Position.Y + rand.Next(50) - 25),
-                        leftNeighbour: junction,
-                        rightNeighbour: null,
-                        station: null
-                    );
-                    Segments.Add(newSegment);
-
-                    // connect the junction to the new segment
-                    junction.ExitRight = newSegment;
-                    newSegment.LeftNeighbour = junction;
-                }
-                else {
-                    // create a new segment continuing from the previous segment
-                    var newSegment = new RailwaySegment(
-                        id: Segments.Count,
-                        start: previousSegment.End,
-                        end: new Point(previousSegment.End.X + 10, previousSegment.End.Y + rand.Next(50) - 25),
-                        leftNeighbour: previousSegment,
-                        rightNeighbour: null,
-                        station: null
-                    );
-                    Segments.Add(newSegment);
-
-                    // connect the previous segment to the new segment
-                    previousSegment.RightNeighbour = newSegment;
-                    newSegment.LeftNeighbour = previousSegment;
-                }
-            }
-
-            // create stations with random segments
-            for (int i = 0; i < 10; i++) {
-                var stationSegments = new List<RailwaySegment>();
-                for (int j = 0; j < 5; j++) {
-                    var randomSegmentIndex = rand.Next(Segments.Count);
-                    var randomSegment = Segments[randomSegmentIndex];
-                    stationSegments.Add(randomSegment);
-                }
-                var station = new Station(
-                    iD: Stations.Count,
-                    name: "Station " + i,
-                    segments: stationSegments,
-                    Color.FromRgb(0, 0, 0)
-                );
-                Stations.Add(station);
-            }
-        }
+        private int stationCounter = 0;
 
         private MapRepository() {
             Segments = new List<RailwaySegment>();
             Junctions = new List<Junction>();
             Stations = new List<Station>();
 
-            Stations.Add(new Station(StationCounter++, $"Station {StationCounter}", new List<RailwaySegment>(), Color.FromRgb(255, 120, 120)));
+            Stations.Add(new Station(stationCounter++, $"Station {stationCounter}", new List<RailwaySegment>(), Color.FromRgb(255, 120, 120)));
             CreateStation(new Point(0, 0), Stations[0]);
-            Stations.Add(new Station(StationCounter++, $"Station {StationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 255, 120)));
+            Stations.Add(new Station(stationCounter++, $"Station {stationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 255, 120)));
             CreateStation(new Point(330, 0), Stations[1]);
-            Stations.Add(new Station(StationCounter++, $"Station {StationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 120, 255)));
+            Stations.Add(new Station(stationCounter++, $"Station {stationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 120, 255)));
             CreateStation(new Point(0, 200), Stations[2]);
 
             RailwaySegment nLeft, nRight;
@@ -150,7 +39,7 @@ namespace InterviewApp.Helpers
             ConnectSegments(Stations[0].Segments[14], Stations[2].Segments.First());
             nLeft = AddNode<RailwaySegment>(Stations[0].Segments.First(), new Point(30, 50));
             nRight = AddNode<RailwaySegment>(Stations[2].Segments[14], new Point(30, 250));
-            ConnectSegments(nLeft, nRight);
+            ConnectSegments(nRight, nLeft);
             nLeft = AddNode<RailwaySegment>(Stations[0].Segments[10], new Point(270, -10));
             nRight = AddNode<RailwaySegment>(Stations[1].Segments[10], new Point(600, -10));
             ConnectSegments(nLeft, nRight);
@@ -210,14 +99,20 @@ namespace InterviewApp.Helpers
                     var result = new RailwaySegment(segmentCounter++, from, to, parent, null, null);
                     var p = parent as RailwaySegment;
                     p.End = from;
-                    p.RightNeighbour = result;
+                    if (p.RightNeighbour == null)
+                        p.RightNeighbour = result;
+                    else
+                        p.LeftNeighbour = result;
                     Segments.Add(result);
                     return result as T;
                 }
                 else if (typeof(T) == typeof(Junction)) {
                     var p = parent as RailwaySegment;
                     var result = new Junction(junctionCounter++, p, null, null, from);
-                    p.RightNeighbour = result;
+                    if (p.RightNeighbour == null)
+                        p.RightNeighbour = result;
+                    else
+                        p.LeftNeighbour = result;
                     p.End = from;
                     Junctions.Add(result);
                     return result as T;
