@@ -13,6 +13,6 @@
         <ComboBox x:Name="pathSelectStart" HorizontalAlignment="Left" Margin="23,65,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="pathSelectStart_SelectionChanged"/>
         <Label x:Name="label" Content="Select starting node" HorizontalAlignment="Left" Margin="23,34,0,0" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="label_Copy" Content="Select finish node" HorizontalAlignment="Left" Margin="167,34,0,0" VerticalAlignment="Top" Width="120"/>
-        <colorpicker:PortableColorPicker Width="100" Height="20" Margin="23,101,877,313" />
+        <!--<colorpicker:PortableColorPicker Width="100" Height="20" Margin="23,101,877,313" />-->
     </Grid>
 </Window>
