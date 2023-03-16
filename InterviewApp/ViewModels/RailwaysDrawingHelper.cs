@@ -58,13 +58,13 @@ namespace InterviewApp.ViewModels
                 if (score.Key is not RailwaySegment)
                     continue;
 
-                var line = (RailwaySegment)score.Key;
-                int colorValue = (int)(score.Value / maxScore * 255);
+                var line = (RailwaySegment) score.Key;
+                int colorValue = (int) (score.Value / maxScore * 255);
                 var pen = new Pen(new SolidColorBrush(Color.FromRgb((byte) (255 - colorValue), (byte) colorValue, 0)), 5);
                 context.DrawLine(pen, line.Start, line.End);
             }
 
-            
+
             context.DrawLine(highlight, ((RailwaySegment) pathStartNode).Start, ((RailwaySegment) pathStartNode).End);
             context.DrawLine(highlight, ((RailwaySegment) pathEndNode).Start, ((RailwaySegment) pathEndNode).End);
 
@@ -95,22 +95,22 @@ namespace InterviewApp.ViewModels
 
             List<Point> hull = new List<Point>();
 
-            int l = 0;
+            int leftmostId = 0;
             for (int i = 1; i < n; i++)
-                if (points[i].X < points[l].X)
-                    l = i;
+                if (points[i].X < points[leftmostId].X)
+                    leftmostId = i;
 
-            int p = l, q;
+            int currentId = leftmostId, nextId;
             do {
-                hull.Add(points[p]);
-                q = (p + 1) % n;
+                hull.Add(points[currentId]);
+                nextId = (currentId + 1) % n;
                 for (int i = 0; i < n; i++) {
-                    if (Orientation(points[p], points[i], points[q]) == 2)
-                        q = i;
+                    if (Orientation(points[currentId], points[i], points[nextId]) == 2)
+                        nextId = i;
                 }
-                p = q;
+                currentId = nextId;
 
-            } while (p != l);
+            } while (currentId != leftmostId);
 
             return hull;
         }
