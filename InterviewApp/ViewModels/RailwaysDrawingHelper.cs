@@ -53,13 +53,14 @@ namespace InterviewApp.ViewModels
 
             var path = AStar.FindPath(pathStartNode, pathEndNode, out var scores);
 
-            var maxScore = scores.Values.Max();
+            var minScore = scores.Values.Min();
+            var maxScore = scores.Values.Max() - minScore;
             foreach (var score in scores) {
                 if (score.Key is not RailwaySegment)
                     continue;
 
                 var line = (RailwaySegment) score.Key;
-                int colorValue = (int) (score.Value / maxScore * 255);
+                int colorValue = (int) ((score.Value - minScore)/ maxScore * 255);
                 var pen = new Pen(new SolidColorBrush(Color.FromRgb((byte) (255 - colorValue), (byte) colorValue, 0)), 5);
                 context.DrawLine(pen, line.Start, line.End);
             }

@@ -69,7 +69,8 @@ namespace InterviewApp.Helpers
         }
 
         private static double Heuristic(INode a, INode b) {
-            return Math.Sqrt(Math.Pow(a.Length - b.Length, 2));
+            return Math.Sqrt(Math.Pow(a.Position.X - b.Position.X, 2) +
+                             Math.Pow(a.Position.Y - b.Position.Y, 2));
         }
     }
 }

@@ -12,6 +12,7 @@ namespace InterviewApp.DataModels
         public int Id { get; }
         public Point Start { get; set; }
         public Point End { get; set; }
+        public Point Position => new((Start.X +  End.X) / 2, (Start.Y + End.Y) / 2);
         public INode LeftNeighbour { get; set; }
         public INode RightNeighbour { get; set; }
         public double Length { get; }
