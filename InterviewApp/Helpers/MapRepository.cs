@@ -26,12 +26,12 @@ namespace InterviewApp.Helpers
             Junctions = new List<Junction>();
             Stations = new List<Station>();
 
-            Stations.Add(new Station(stationCounter++, $"Station {stationCounter}", new List<RailwaySegment>(), Color.FromRgb(255, 120, 120)));
-            CreateStation(new Point(0, 0), Stations[0]);
-            Stations.Add(new Station(stationCounter++, $"Station {stationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 255, 120)));
-            CreateStation(new Point(330, 0), Stations[1]);
-            Stations.Add(new Station(stationCounter++, $"Station {stationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 120, 255)));
-            CreateStation(new Point(0, 200), Stations[2]);
+            Stations.Add(new Station(stationCounter, $"Station {stationCounter}", new List<RailwaySegment>(), Color.FromRgb(255, 120, 120)));
+            CreateStation(new Point(0, 0), Stations[stationCounter++]);
+            Stations.Add(new Station(stationCounter, $"Station {stationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 255, 120)));
+            CreateStation(new Point(330, 0), Stations[stationCounter++]);
+            Stations.Add(new Station(stationCounter, $"Station {stationCounter}", new List<RailwaySegment>(), Color.FromRgb(120, 120, 255)));
+            CreateStation(new Point(0, 200), Stations[stationCounter++]);
 
             RailwaySegment nLeft, nRight;
             ConnectSegments(Stations[0].Segments.Last(), Stations[1].Segments.First());
