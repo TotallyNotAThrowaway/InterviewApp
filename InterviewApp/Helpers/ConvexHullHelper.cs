@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace InterviewApp.Helpers
 {
-    internal class ConvexHullHelper
+    public class ConvexHullHelper
     {
         private static int Orientation(Point p, Point q, Point r) {
             double val = (q.Y - p.Y) * (r.X - q.X) - (q.X - p.X) * (r.Y - q.Y);

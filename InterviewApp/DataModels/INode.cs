@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InterviewApp.DataModels
 {
-    internal interface INode
+    public interface INode
     {
         double Length { get; }
         List<INode> GetNeighbours(INode from);

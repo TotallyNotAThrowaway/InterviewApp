@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ColorPickerWPF" Version="1.0.9" />
     <PackageReference Include="PixiEditor.ColorPicker" Version="3.3.1" />
   </ItemGroup>
 

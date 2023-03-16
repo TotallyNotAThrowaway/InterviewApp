@@ -7,7 +7,7 @@ using InterviewApp.DataModels;
 
 namespace InterviewApp.Helpers
 {
-    internal class AStar
+    public class AStar
     {
         public static List<INode> FindPath(INode start, INode end, out Dictionary<INode, double> scores) {
             var openSet = new List<INode> { start };
@@ -51,6 +51,10 @@ namespace InterviewApp.Helpers
 
             scores = fScore;
             return null;
+        }
+
+        public static List<INode> FindPath(INode start, INode end) {
+            return FindPath(start, end, out var _);
         }
 
         private static List<INode> ReconstructPath(Dictionary<INode, INode> cameFrom, INode current) {
