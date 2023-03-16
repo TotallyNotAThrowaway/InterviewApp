@@ -1,6 +1,7 @@
 using InterviewApp.DataModels;
 using InterviewApp.Helpers;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -38,6 +39,7 @@ namespace InterviewApp.ViewModels
 
                 var polygon = ConvexHull(allStationPoints.ToList());
                 context.PushOpacity(0.5d);
+
                 var geometry = new StreamGeometry();
                 using (StreamGeometryContext geometryContext = geometry.Open()) {
                     geometryContext.BeginFigure(polygon[0], true, true);
@@ -46,7 +48,11 @@ namespace InterviewApp.ViewModels
                 }
                 var brush = new SolidColorBrush(station.Color);
                 context.DrawGeometry(brush, new Pen(brush, 20), geometry);
+
                 context.Pop();
+
+                var formattedText = new FormattedText(station.Name, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 20, brush);
+                context.DrawText(formattedText, new Point(polygon.Average(p => p.X), polygon.Average(p => p.Y)));
             }
 
             var path = AStar.FindPath(PathStartNode, PathEndNode, out var scores);

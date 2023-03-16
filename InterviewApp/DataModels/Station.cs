@@ -10,7 +10,7 @@ namespace InterviewApp.DataModels
         public int ID { get; }
         public string Name { get; }
 
-        public Color Color { get; }
+        public Color Color { get; set; }
 
         public List<RailwaySegment> Segments { get; set; }
 

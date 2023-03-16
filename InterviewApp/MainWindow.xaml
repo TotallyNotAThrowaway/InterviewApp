@@ -8,11 +8,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="1000">
     <Grid Margin="0,0,0,0">
-        <local1:MControl RenderTransformOrigin="0.745,0.787" Margin="271,61,20,61" x:Name="RailwayMap"/>
-        <ComboBox x:Name="pathSelectEnd" HorizontalAlignment="Left" Margin="167,65,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged"/>
-        <ComboBox x:Name="pathSelectStart" HorizontalAlignment="Left" Margin="23,65,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="PathSelectStart_SelectionChanged"/>
-        <Label x:Name="label" Content="Select starting node" HorizontalAlignment="Left" Margin="23,34,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="label_Copy" Content="Select finish node" HorizontalAlignment="Left" Margin="167,34,0,0" VerticalAlignment="Top" Width="120"/>
+        <local1:MControl RenderTransformOrigin="0.745,0.787" Margin="300,70,30,70" x:Name="RailwayMap"/>
+        <ComboBox x:Name="pathSelectEnd" HorizontalAlignment="Left" Margin="164,112,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged"/>
+        <ComboBox x:Name="pathSelectStart" HorizontalAlignment="Left" Margin="20,112,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="PathSelectStart_SelectionChanged"/>
+        <Label x:Name="label" Content="Select starting node" HorizontalAlignment="Left" Margin="20,81,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="label_Copy" Content="Select finish node" HorizontalAlignment="Left" Margin="164,81,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Pathfinding" HorizontalAlignment="Left" Margin="20,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.658,0.541" Height="30" Width="145"/>
+        <ComboBox x:Name="ColorSelect" HorizontalAlignment="Left" Margin="164,281,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ColorSelect_SelectionChanged"/>
+        <ComboBox x:Name="StationSelect" HorizontalAlignment="Left" Margin="20,281,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Station highlight color" HorizontalAlignment="Left" Margin="20,233,0,0" VerticalAlignment="Top"/>
         <!--<colorpicker:PortableColorPicker Width="100" Height="20" Margin="23,101,877,313" />-->
     </Grid>
 </Window>
