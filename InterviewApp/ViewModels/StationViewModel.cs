@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace InterviewApp.ViewModels
 {
-    internal class StationViewModel: ViewModelBase
+    public class StationViewModel: ViewModelBase
     {
         private Color stationColor;
         

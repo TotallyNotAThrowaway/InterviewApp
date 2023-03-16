@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace InterviewApp.DataModels
@@ -15,6 +16,8 @@ namespace InterviewApp.DataModels
         public Color Color { get; }
 
         public List<RailwaySegment> Segments { get; set; }
+
+        public IEnumerable<Point> AllPoints => Segments.SelectMany(s => new[] { s.Start, s.End }).ToHashSet();
 
         public Station(int iD, string name, List<RailwaySegment> segments, Color color) {
             ID = iD;

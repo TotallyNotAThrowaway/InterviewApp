@@ -10,7 +10,6 @@ using System.Windows.Media;
 namespace InterviewApp.Helpers
 {
     internal class MapRepository {
-        private static Random rand = new Random();
         private static MapRepository instance;
         public static MapRepository Instance => instance ??= new MapRepository();
 

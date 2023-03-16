@@ -23,8 +23,6 @@ namespace InterviewApp.Controls
     /// </summary>
     public partial class MControl : UserControl
     {
-        private readonly World world = WorldGenerator.GenerateWorld();
-
         public static readonly DependencyProperty MyPropertyProperty =
             DependencyProperty.Register("MyProperty", typeof(string), typeof(MControl), new PropertyMetadata(null));
 
@@ -34,30 +32,16 @@ namespace InterviewApp.Controls
             set { SetValue(MyPropertyProperty, value); }
         }
 
+        public WorldViewModel worldViewModel { get; }
+
         public MControl()
         {
             InitializeComponent();
+            worldViewModel = new WorldViewModel();
         }
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            //drawingContext.DrawEllipse(Brushes.Blue, null, new Point(50, 50), 50, 50);
-
-            /* this is the old solution
-            foreach (var railway in world.Railways) {
-                railway.Draw(drawingContext);
-            }
-
-            foreach (var junction in world.Junctions) {
-                junction.Draw(drawingContext);
-            }
-
-            foreach (var station in world.Stations) {
-                //station.Draw(drawingContext);
-                station.Draw2(drawingContext);
-            }
-            */
-
             RailwaysDrawingHelper.Draw(drawingContext);
         }
 
