@@ -1,9 +1,7 @@
+using InterviewApp.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using InterviewApp.DataModels;
 using System.Windows;
 using System.Windows.Media;
 
@@ -50,15 +48,19 @@ namespace InterviewApp.Helpers
         private void ConnectSegments(RailwaySegment left, RailwaySegment right) {
             var connection = new RailwaySegment(segmentCounter++, left.RightNeighbour == null ? left.End : left.Start, right.LeftNeighbour == null ?  right.Start : right.End, left, right, null);
 
-            if (left.RightNeighbour == null)
+            if (left.RightNeighbour == null) {
                 left.RightNeighbour = connection;
-            else
+            }
+            else {
                 left.LeftNeighbour = connection;
+            }
 
-            if (right.LeftNeighbour == null)
+            if (right.LeftNeighbour == null) {
                 right.LeftNeighbour = connection;
-            else
+            }
+            else {
                 right.RightNeighbour = connection;
+            }
 
             Segments.Add(connection);
         }
@@ -98,20 +100,26 @@ namespace InterviewApp.Helpers
                     var result = new RailwaySegment(segmentCounter++, from, to, parent, null, null);
                     var p = parent as RailwaySegment;
                     p.End = from;
-                    if (p.RightNeighbour == null)
+                    if (p.RightNeighbour == null) {
                         p.RightNeighbour = result;
-                    else
+                    }
+                    else {
                         p.LeftNeighbour = result;
+                    }
+
                     Segments.Add(result);
                     return result as T;
                 }
                 else if (typeof(T) == typeof(Junction)) {
                     var p = parent as RailwaySegment;
                     var result = new Junction(junctionCounter++, p, null, null, from);
-                    if (p.RightNeighbour == null)
+                    if (p.RightNeighbour == null) {
                         p.RightNeighbour = result;
-                    else
+                    }
+                    else {
                         p.LeftNeighbour = result;
+                    }
+
                     p.End = from;
                     Junctions.Add(result);
                     return result as T;
@@ -126,29 +134,38 @@ namespace InterviewApp.Helpers
                 to.Y += offset.Value.Y;
             }
             var node = AddNode<T>(parent, to);
-            if (node is RailwaySegment)
+            if (node is RailwaySegment) {
                 station.Segments.Add(node as RailwaySegment);
+            }
+
             return node;
         }
 
         private Junction InsertJunction(RailwaySegment entry, RailwaySegment exit, Point position) {
             if ((entry.Start != position &&
-                entry.End != position) ||
-                (exit.Start != position &&
-                exit.End != position))
+                 entry.End   != position) 
+                 ||
+                (exit.Start  != position &&
+                 exit.End    != position)) 
+            {
                 throw new ArgumentException("segments don't connect to the position");
+            }
 
             var junction = new Junction(junctionCounter++, entry, exit, null, position);
 
-            if (entry.Start == position)
+            if (entry.Start == position) {
                 entry.LeftNeighbour = junction;
-            else
+            }
+            else {
                 entry.RightNeighbour = junction;
+            }
 
-            if (exit.Start == position)
+            if (exit.Start == position) {
                 exit.LeftNeighbour = junction;
-            else
+            }
+            else {
                 exit.RightNeighbour = junction;
+            }
 
             Junctions.Add(junction);
             return junction;

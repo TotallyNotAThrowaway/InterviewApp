@@ -1,9 +1,7 @@
+using InterviewApp.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using InterviewApp.DataModels;
 
 namespace InterviewApp.Helpers
 {

@@ -1,13 +1,9 @@
-﻿using System;
+﻿using InterviewApp.DataModels;
+using InterviewApp.Helpers;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
-using InterviewApp.Helpers;
-using InterviewApp.DataModels;
 using System.Windows;
-using System.Windows.Shell;
 
 namespace UnitTests
 {

@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace InterviewApp.DataModels
@@ -28,10 +25,13 @@ namespace InterviewApp.DataModels
                 result.Add(LeftNeighbour);
             }
             else if (from == this) {
-                if (LeftNeighbour != null)
+                if (LeftNeighbour != null) {
                     result.Add(LeftNeighbour);
-                if (RightNeighbour != null)
+                }
+
+                if (RightNeighbour != null) {
                     result.Add(RightNeighbour);
+                }
             }
 
             return result;

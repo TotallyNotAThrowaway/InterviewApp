@@ -1,15 +1,12 @@
 using InterviewApp.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace InterviewApp.ViewModels
 {
     public class WorldViewModel : ViewModelBase {
-        List<StationViewModel> Stations { get; }
+        private List<StationViewModel> Stations { get; }
 
         public WorldViewModel(List<StationViewModel> stations) {
             Stations = stations;
